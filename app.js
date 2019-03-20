@@ -9,7 +9,11 @@ var indexRouter = require('./routes/index');
 var channelsRouter = require('./routes/channels');
 
 var app = express();
-mongoose.connect('mongodb://localhost:27017/yt', {useNewUrlParser: true});
+mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27017/yt'
+mongoose.connect(mongoURL, {useNewUrlParser: false});
+
+var dumpInitialData = require('./db/dumpInitialData');
+dumpInitialData();
 
 const cors = require('cors');
 app.use(cors());
